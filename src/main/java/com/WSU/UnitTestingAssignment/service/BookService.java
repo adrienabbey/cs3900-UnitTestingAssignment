@@ -20,7 +20,7 @@ public class BookService {
     }
 
     public boolean deleteBook(Integer id) {
-        if(repository.existsById(id)) {
+        if (repository.existsById(id)) {
             repository.delete(id);
             return true;
         } else {

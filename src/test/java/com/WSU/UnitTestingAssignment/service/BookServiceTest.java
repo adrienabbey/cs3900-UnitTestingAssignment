@@ -32,11 +32,11 @@ public class BookServiceTest {
     @Test
     public void create() {
         Book newBook = new Book(1, "Some Author", "Some Title");
-        // {{ what should happen here to ensure newBook is returned from the repository? }}
+        // {{ what should happen here to ensure newBook is returned from the repository?
+        // }}
 
         Book book = bookService.createBook(
-            new Book(null, "Some Author", "Some Title")
-        );
+                new Book(null, "Some Author", "Some Title"));
 
         assertEquals(newBook.getAuthor(), book.getAuthor());
         assertEquals(newBook.getTitle(), book.getTitle());
