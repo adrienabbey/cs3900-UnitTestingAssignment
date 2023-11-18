@@ -27,23 +27,24 @@ public class BookServiceTest {
     @Mock
     BookRepository bookRepository;
 
-    // todo: the name of this test could be improved; rename it to be more explicit
-    // todo: fix this failing test; book is null now that we have a collaborator
+    // done: the name of this test could be improved; rename it to be more explicit
+    // done: fix this failing test; book is null now that we have a collaborator
     @Test
-    public void create() {
+    public void createBookReturnsAuthorAndTitle() {
         Book newBook = new Book(1, "Some Author", "Some Title");
-        // {{ what should happen here to ensure newBook is returned from the repository?
-        // }}
+        // We need to actually test the mockup.
+        when(bookRepository.save(new Book(1, "Some Author", "Some Title")))
+                .thenReturn(new Book(1, "Some Author", "Some Title"));
 
         Book book = bookService.createBook(
-                new Book(null, "Some Author", "Some Title"));
+                new Book(1, "Some Author", "Some Title"));
 
         assertEquals(newBook.getAuthor(), book.getAuthor());
         assertEquals(newBook.getTitle(), book.getTitle());
         assertNotNull(book.getId());
     }
 
-    // todo: fix this failing test
+    // done: fix this failing test
     @Test
     public void getBookByIdReturnsSpecifiedBook() {
         when(bookRepository.findById(45)).thenReturn(
@@ -52,7 +53,7 @@ public class BookServiceTest {
 
         Book expectedBook = new Book(45, "The Eye of the World", "Robert Jordan");
 
-        assertEquals(expectedBook, bookService.getBookById(46));
+        assertEquals(expectedBook, bookService.getBookById(45)); // The ID number was wrong.
     }
 
     // todo: fix this failing test
