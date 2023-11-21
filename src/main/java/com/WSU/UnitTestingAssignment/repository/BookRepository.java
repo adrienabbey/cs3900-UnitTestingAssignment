@@ -27,4 +27,9 @@ public class BookRepository {
     public Book get(Integer id) {
         return new Book(id, "author", "title");
     }
+
+    public Book changeBook(Book changingBook, Integer id) {
+        changingBook.setId(id);
+        return changingBook;
+    }
 }

@@ -31,14 +31,18 @@ public class BookServiceTest {
     // done: fix this failing test; book is null now that we have a collaborator
     @Test
     public void createBookReturnsAuthorAndTitle() {
+        // Create a new book to work with:
         Book newBook = new Book(1, "Some Author", "Some Title");
-        // We need to actually test the mockup.
+
+        // Configure the mockup, which is required before testing:
         when(bookRepository.save(new Book(1, "Some Author", "Some Title")))
                 .thenReturn(new Book(1, "Some Author", "Some Title"));
 
+        // Use the function being tested and save the result:
         Book book = bookService.createBook(
                 new Book(1, "Some Author", "Some Title"));
 
+        // Actual tests: ensure the results are as expected:
         assertEquals(newBook.getAuthor(), book.getAuthor());
         assertEquals(newBook.getTitle(), book.getTitle());
         assertNotNull(book.getId());
@@ -78,4 +82,25 @@ public class BookServiceTest {
     }
 
     // todo: write tests for updateBook() to achieve 100% code coverage
+    @Test
+    public void updateBookReturnsUpdatedBook() {
+        // Create a book to test against:
+        Book goodBook = new Book(1, "Shirtaloon", "He Who Fights with Monsters");
+
+        // Configure the mockup:
+        when(bookRepository.changeBook(new Book(1, "Travis Deverell", "He Who Fights with Monsters"), 1))
+                .thenReturn(new Book(1, "Shirtaloon", "He Who Fights with Monsters"));
+
+        // Create a book to update:
+        bookService.createBook(new Book(1, "Travis Deverell", "He Who Fights with Monsters"));
+
+        Book testBook = bookService.getBookById(1);
+        System.err.println(testBook);
+
+        // Use the function being tested:
+        Book updatedBook = bookService.updateBook(new Book(1, "Shirtaloon", "He Who Fights with Monsters"), 1);
+
+        // Verify results:
+        assertEquals(goodBook, updatedBook);
+    }
 }
